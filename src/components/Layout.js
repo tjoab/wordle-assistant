@@ -31,7 +31,7 @@ function Layout() {
         col--;
       }
     } else if (e.code === "Restart") {
-      fetch("http://tjayoub.pythonanywhere.com/restart", { method: "POST" })
+      fetch("https://tjayoub.pythonanywhere.com/restart", { method: "POST" })
         .then((response) => response.json())
         .then((data) => {
           // handle the response data, which should be a JSON object with a "message" key
@@ -129,7 +129,7 @@ function Layout() {
     console.log(userGuess);
     console.log(userPatern);
     const response = await fetch(
-      "http://tjayoub.pythonanywhere.com/play_round",
+      "https://tjayoub.pythonanywhere.com/play_round",
       {
         method: "POST",
         headers: {
@@ -146,7 +146,7 @@ function Layout() {
   };
 
   useEffect(() => {
-    fetch("http://tjayoub.pythonanywhere.com/restart", { method: "POST" })
+    fetch("https://tjayoub.pythonanywhere.com/restart", { method: "POST" })
       .then((response) => response.json())
       .then((data) => {
         // handle the response data, which should be a JSON object with a "message" key
