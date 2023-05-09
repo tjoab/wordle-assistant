@@ -159,9 +159,9 @@ function Layout() {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keyup", processInput);
+    document.addEventListener("keydown", processInput);
     return () => {
-      document.removeEventListener("keyup", processInput);
+      document.removeEventListener("keydown", processInput);
     };
   }, []);
 
