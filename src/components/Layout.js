@@ -159,6 +159,13 @@ function Layout() {
   }, []);
 
   useEffect(() => {
+    document.addEventListener("keyup", processInput);
+    return () => {
+      document.removeEventListener("keyup", processInput);
+    };
+  }, []);
+
+  useEffect(() => {
     for (let i = 1; i <= maxCol; i++) {
       let t = document.getElementById("tile".concat(i.toString()));
       t.addEventListener("click", function (event) {
@@ -191,8 +198,6 @@ function Layout() {
           t.classList.add(classList[(classIndex[currClass] + 1) % 3]);
         });
       }
-
-      document.addEventListener("keyup", processInput);
 
       for (let i = 0; i < keyboardRows.length; i++) {
         let currRow = keyboardRows[i].children;
