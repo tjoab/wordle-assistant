@@ -59,8 +59,10 @@ function Layout() {
           let updateMes = document.getElementById("updateMessage").children[0];
           updateMes.textContent = "";
 
-          let alterMes = document.getElementById("alert");
-          alterMes.textContent = "LOADING...";
+          let loadDiv = document.getElementById("loading");
+          loadDiv.classList.remove("hidden");
+          loadDiv.classList.add("visible");
+
           let ranks = document.getElementsByClassName("rank");
           let guesses = document.getElementsByClassName("guess");
           let bitss = document.getElementsByClassName("bits");
@@ -109,8 +111,8 @@ function Layout() {
               count = count + 1;
             }
           }
-          alterMes = document.getElementById("alert");
-          alterMes.textContent = "";
+          loadDiv.classList.remove("visible");
+          loadDiv.classList.add("hidden");
 
           resultSection.classList.remove("hidden");
           resultSection.classList.add("visible");
@@ -337,7 +339,9 @@ function Layout() {
           ⟳ Restart
         </div>
       </div>
-      <div id="alert"></div>
+      <div id="loadingWrap">
+        <div id="loading" class={`custom-loader hidden`}></div>
+      </div>
       <div id="resultsWrapper" class="hidden">
         <div id="resultRow">
           <div id="rowElement" class="rank"></div>
