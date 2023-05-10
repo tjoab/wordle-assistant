@@ -25,7 +25,7 @@ And it shows you the following pattern:
 ![#edcc0e](https://placehold.co/15x15/edcc0e/edcc0e.png)
 <br></br>
 
-This means that the secret word has a `C` is the same location, an `E` in a location other than were it was in your guess, and no `R`, `A` or `N`. Each of your guesses reveals some new information that you can use to help you make progress in the game.
+This means that the secret word has a `C` is the same location, an `E` in a location other than where it was in your guess, and no `R`, `A` or `N`. Each of your guesses reveals some new information that you can use to help you make progress in the game.
 
 
 # How the Assistant Works
