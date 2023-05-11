@@ -6,6 +6,10 @@ A web app built using React.js handling assistant logic through a RESTful API bu
 
 The API is hosted using PythonAnywhere, while the app itself is hosted on Netlify.
 
+Detailed discussion can be found on my website [here](https://tjoab.com/work/wordle)!
+
+
+
 # Summary of Wordle
 
 Wordle is a game that came out not so recently anymore, but gained popularity very quickly when it was released. The premise of the game is to guess what the secret 5 letter word of the day is within 6 guesses. Each time you make a guess, the game reveals a color pattern associated with your guess that serves as a hint to tweak your next guess. 
