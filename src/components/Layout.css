@@ -274,3 +274,33 @@ hr {
   justify-content: center;
   display: grid;
 }
+
+@media (max-width: 400px) {
+  .keyboardRow {
+    width: 300px;
+  }
+  .keyTile {
+    width: 24px;
+    height: 26px;
+    margin: 1.5px;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+  .keyEnter {
+    width: 48px;
+    height: 26px;
+    margin: 1.5px;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+  .keyRestart {
+    width: 80px;
+    height: 26px;
+    margin: 1.5px;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+}

@@ -241,102 +241,104 @@ function Layout() {
           <div id="tile5" class="empty"></div>
         </div>
       </div>
-      <div id="updateMessage">
-        <p class="updateText"></p>
-      </div>
-      <div class="keyboardRow">
-        <div id="KeyQ" class="keyTile">
-          Q
+      <div id="keyboard">
+        <div id="updateMessage">
+          <p class="updateText"></p>
         </div>
-        <div id="KeyW" class="keyTile">
-          W
+        <div class="keyboardRow">
+          <div id="KeyQ" class="keyTile">
+            Q
+          </div>
+          <div id="KeyW" class="keyTile">
+            W
+          </div>
+          <div id="KeyE" class="keyTile">
+            E
+          </div>
+          <div id="KeyR" class="keyTile">
+            R
+          </div>
+          <div id="KeyT" class="keyTile">
+            T
+          </div>
+          <div id="KeyY" class="keyTile">
+            Y
+          </div>
+          <div id="KeyU" class="keyTile">
+            U
+          </div>
+          <div id="KeyI" class="keyTile">
+            I
+          </div>
+          <div id="KeyO" class="keyTile">
+            O
+          </div>
+          <div id="KeyP" class="keyTile">
+            P
+          </div>
         </div>
-        <div id="KeyE" class="keyTile">
-          E
+        <div class="keyboardRow">
+          <div id="KeyA" class="keyTile">
+            A
+          </div>
+          <div id="KeyS" class="keyTile">
+            S
+          </div>
+          <div id="KeyD" class="keyTile">
+            D
+          </div>
+          <div id="KeyF" class="keyTile">
+            F
+          </div>
+          <div id="KeyG" class="keyTile">
+            G
+          </div>
+          <div id="KeyH" class="keyTile">
+            H
+          </div>
+          <div id="KeyJ" class="keyTile">
+            J
+          </div>
+          <div id="KeyK" class="keyTile">
+            K
+          </div>
+          <div id="KeyL" class="keyTile">
+            L
+          </div>
         </div>
-        <div id="KeyR" class="keyTile">
-          R
+        <div class="keyboardRow">
+          <div id="Enter" class="keyEnter">
+            Enter
+          </div>
+          <div id="KeyZ" class="keyTile">
+            Z
+          </div>
+          <div id="KeyX" class="keyTile">
+            X
+          </div>
+          <div id="KeyC" class="keyTile">
+            C
+          </div>
+          <div id="KeyV" class="keyTile">
+            V
+          </div>
+          <div id="KeyB" class="keyTile">
+            B
+          </div>
+          <div id="KeyN" class="keyTile">
+            N
+          </div>
+          <div id="KeyM" class="keyTile">
+            M
+          </div>
+          <div id="Backspace" class="keyTile">
+            ⌫
+          </div>
         </div>
-        <div id="KeyT" class="keyTile">
-          T
-        </div>
-        <div id="KeyY" class="keyTile">
-          Y
-        </div>
-        <div id="KeyU" class="keyTile">
-          U
-        </div>
-        <div id="KeyI" class="keyTile">
-          I
-        </div>
-        <div id="KeyO" class="keyTile">
-          O
-        </div>
-        <div id="KeyP" class="keyTile">
-          P
-        </div>
-      </div>
-      <div class="keyboardRow">
-        <div id="KeyA" class="keyTile">
-          A
-        </div>
-        <div id="KeyS" class="keyTile">
-          S
-        </div>
-        <div id="KeyD" class="keyTile">
-          D
-        </div>
-        <div id="KeyF" class="keyTile">
-          F
-        </div>
-        <div id="KeyG" class="keyTile">
-          G
-        </div>
-        <div id="KeyH" class="keyTile">
-          H
-        </div>
-        <div id="KeyJ" class="keyTile">
-          J
-        </div>
-        <div id="KeyK" class="keyTile">
-          K
-        </div>
-        <div id="KeyL" class="keyTile">
-          L
-        </div>
-      </div>
-      <div class="keyboardRow">
-        <div id="Enter" class="keyEnter">
-          Enter
-        </div>
-        <div id="KeyZ" class="keyTile">
-          Z
-        </div>
-        <div id="KeyX" class="keyTile">
-          X
-        </div>
-        <div id="KeyC" class="keyTile">
-          C
-        </div>
-        <div id="KeyV" class="keyTile">
-          V
-        </div>
-        <div id="KeyB" class="keyTile">
-          B
-        </div>
-        <div id="KeyN" class="keyTile">
-          N
-        </div>
-        <div id="KeyM" class="keyTile">
-          M
-        </div>
-        <div id="Backspace" class="keyTile">
-          ⌫
-        </div>
-      </div>
-      <div class="keyboardRow">
-        <div id="Restart" class="keyRestart">
-          ⟳ Restart
+        <div class="keyboardRow">
+          <div id="Restart" class="keyRestart">
+            ⟳ Restart
+          </div>
         </div>
       </div>
       <div id="loadingWrap">
