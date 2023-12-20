@@ -1,7 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
+import io from 'socket.io-client';
 import "./Layout.css";
 
 function Layout() {
+  const socketRef = useRef(null);
+  const [gameState, setGameState] = useState(null);
+
+  useEffect(() => {
+    const socketInstance = io.connect('http://127.0.0.1:5000/');
+
+    socketInstance.on('connect', () => {
+      console.log('Connected to server');
+      socketInstance.emit('join_game');
+    });
+
+    socketInstance.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
+
+    socketInstance.on('update_game', (data) => {
+      console.log('Received updated game state:', data.state);
+      setGameState(data.state);
+    });
+
+    socketRef.current = socketInstance;
+
+    return () => {
+      if (socketInstance) {
+        socketInstance.emit('leave_game');
+        socketInstance.disconnect();
+      }
+    };
+  }, []);
+
+
   const classList = ["absent", "present", "correct"];
 
   var classIndex = { absent: 0, present: 1, correct: 2 };
@@ -31,19 +63,9 @@ function Layout() {
         col--;
       }
     } else if (e.code === "Restart") {
-      fetch("https://tjayoub.pythonanywhere.com/restart", { method: "POST" })
-        .then((response) => response.json())
-        .then((data) => {
-          // handle the response data, which should be a JSON object with a "message" key
-          console.log(data.message);
-        })
-        .catch((error) => {
-          // handle any errors that occur during the request
-          console.error(error);
-        });
-      window.location.reload();
+      handleRestart();
     } else if (e.code == "Enter") {
-      async function handleEnter() {
+      const handleEnter = async () => {
         let patternEntered = true;
         for (let i = 1; i <= maxCol; i++) {
           if (
@@ -86,7 +108,9 @@ function Layout() {
           let resultSection = document.getElementById("resultsWrapper");
 
           // Send to API endpoint
+          
           let res = await handlePlayRound(userGuess.toLowerCase(), userPatern);
+          res = res['state']['top_three']
           console.log(res);
           let total = res.length;
 
@@ -101,6 +125,7 @@ function Layout() {
           } else {
             let count = 0;
             for (var i in res) {
+              console.log(i)
               let w = res[i][0];
               let r = res[i][1].toString();
 
@@ -127,38 +152,37 @@ function Layout() {
     }
   };
 
-  const handlePlayRound = async (userGuess, userPatern) => {
-    console.log(userGuess);
-    console.log(userPatern);
-    const response = await fetch(
-      "https://tjayoub.pythonanywhere.com/play_round",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          guess: userGuess,
-          pattern: userPatern,
-        }),
+
+  const handlePlayRound = async (guess, pattern) => {
+    console.log('Calling handlePlayRound with:', guess, pattern);
+  
+    return new Promise((resolve, reject) => {
+      const socket = socketRef.current;
+  
+      if (!socket) {
+        reject(new Error('Socket not available'));
       }
-    );
-    const result = await response.json();
-    return result.topThree;
+  
+      // Listen for the 'update_game' event only once
+      socket.once('update_game', (data) => {
+        resolve(data);
+      });
+  
+      // Emit the 'game_action' event
+      socket.emit('game_action', { action: 'play_round', guess, pattern });
+    });
+  };
+  
+  const handleRestart = () => {
+    const socket = socketRef.current;
+    
+    if (socket) {
+      socket.emit('leave_game');
+      window.location.reload();
+    }
   };
 
-  useEffect(() => {
-    fetch("https://tjayoub.pythonanywhere.com/restart", { method: "POST" })
-      .then((response) => response.json())
-      .then((data) => {
-        // handle the response data, which should be a JSON object with a "message" key
-        console.log(data.message);
-      })
-      .catch((error) => {
-        // handle any errors that occur during the request
-        console.error(error);
-      });
-  }, []);
+  
 
   useEffect(() => {
     document.addEventListener("keydown", processInput);
