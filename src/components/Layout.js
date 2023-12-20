@@ -7,7 +7,7 @@ function Layout() {
   const [gameState, setGameState] = useState(null);
 
   useEffect(() => {
-    const socketInstance = io.connect('http://127.0.0.1:5000/');
+    const socketInstance = io.connect('https://tjayoub.pythonanywhere.com/');
 
     socketInstance.on('connect', () => {
       console.log('Connected to server');
