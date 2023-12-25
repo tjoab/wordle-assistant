@@ -1,36 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import "./Layout.css";
 
 function Layout() {
-  const socketRef = useRef(null);
-  const [gameState, setGameState] = useState(null);
+  const [uniqueId, setUniqueId] = useState(uuidv4());
 
   useEffect(() => {
-    const socketInstance = io.connect('https://tjayoub.pythonanywhere.com/');
-
-    socketInstance.on('connect', () => {
-      console.log('Connected to server');
-      socketInstance.emit('join_game');
-    });
-
-    socketInstance.on('disconnect', () => {
-      console.log('Disconnected from server');
-    });
-
-    socketInstance.on('update_game', (data) => {
-      console.log('Received updated game state:', data.state);
-      setGameState(data.state);
-    });
-
-    socketRef.current = socketInstance;
-
-    return () => {
-      if (socketInstance) {
-        socketInstance.emit('leave_game');
-        socketInstance.disconnect();
-      }
-    };
+    // Generate a new unique ID whenever the component mounts or the page is reloaded
+    setUniqueId(uuidv4());
   }, []);
 
 
@@ -63,7 +40,11 @@ function Layout() {
         col--;
       }
     } else if (e.code === "Restart") {
-      handleRestart();
+      (async () => {
+          let res = await handleRestart(uniqueId);
+          console.log(res);
+          window.location.reload();
+      })();
     } else if (e.code == "Enter") {
       const handleEnter = async () => {
         let patternEntered = true;
@@ -108,9 +89,7 @@ function Layout() {
           let resultSection = document.getElementById("resultsWrapper");
 
           // Send to API endpoint
-          
-          let res = await handlePlayRound(userGuess.toLowerCase(), userPatern);
-          res = res['state']['top_three']
+          let res = await handlePlayRound(userGuess.toLowerCase(), userPatern, uniqueId);
           console.log(res);
           let total = res.length;
 
@@ -152,35 +131,102 @@ function Layout() {
     }
   };
 
-
-  const handlePlayRound = async (guess, pattern) => {
-    console.log('Calling handlePlayRound with:', guess, pattern);
-  
-    return new Promise((resolve, reject) => {
-      const socket = socketRef.current;
-  
-      if (!socket) {
-        reject(new Error('Socket not available'));
+  const handlePlayRound = async (userGuess, userPatern, ID) => {
+    console.log('Calling handlePlayRound with:', userGuess, userPatern);
+    const response = await fetch(
+      "http://tjayoub.pythonanywhere.com/play_round",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          guess: userGuess,
+          pattern: userPatern,
+          id: ID,
+        }),
+        mode: 'cors',
       }
-  
-      // Listen for the 'update_game' event only once
-      socket.once('update_game', (data) => {
-        resolve(data);
-      });
-  
-      // Emit the 'game_action' event
-      socket.emit('game_action', { action: 'play_round', guess, pattern });
-    });
+    );
+    const result = await response.json();
+    console.log(result)
+    return result.top_three
+    ;
   };
   
-  const handleRestart = () => {
-    const socket = socketRef.current;
-    
-    if (socket) {
-      socket.emit('leave_game');
-      window.location.reload();
-    }
+  const handleRestart = async (ID) => {
+    console.log('Calling handleRestart');
+    const response = await fetch(
+        "http://tjayoub.pythonanywhere.com/leave_game",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: ID,
+          }),
+          mode: 'cors',
+        }
+      );
+      const result = await response.json();
+      return result
   };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = async () => {
+      // Send a request to the server to indicate the user is leaving
+      console.log('closing tab')
+      
+    const response = await fetch(
+        "http://tjayoub.pythonanywhere.com/leave_game",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: uniqueId,
+          }),
+          mode: 'cors',
+          keepalive: true
+        }
+      );
+      const result = await response.json();
+      console.log(result)
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      // Cleanup: remove the event listener when the component unmounts
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  const handleJoinGame = async (ID) => {
+    console.log('Creating game');
+    const response = await fetch(
+        "http://tjayoub.pythonanywhere.com/join_game",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: ID,
+          }),
+          mode: 'cors',
+        }
+      );
+      const result = await response.json();
+      console.log(result)
+    };
+
+  useEffect(() => {
+    handleJoinGame(uniqueId)
+  }, []);
 
   
 
