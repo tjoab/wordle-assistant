@@ -134,7 +134,7 @@ function Layout() {
   const handlePlayRound = async (userGuess, userPatern, ID) => {
     console.log('Calling handlePlayRound with:', userGuess, userPatern);
     const response = await fetch(
-      "http://tjayoub.pythonanywhere.com/play_round",
+      "https://tjayoub.pythonanywhere.com/play_round",
       {
         method: "POST",
         headers: {
@@ -157,7 +157,7 @@ function Layout() {
   const handleRestart = async (ID) => {
     console.log('Calling handleRestart');
     const response = await fetch(
-        "http://tjayoub.pythonanywhere.com/leave_game",
+        "https://tjayoub.pythonanywhere.com/leave_game",
         {
           method: "POST",
           headers: {
@@ -180,7 +180,7 @@ function Layout() {
       console.log('closing tab')
       
     const response = await fetch(
-        "http://tjayoub.pythonanywhere.com/leave_game",
+        "https://tjayoub.pythonanywhere.com/leave_game",
         {
           method: "POST",
           headers: {
@@ -208,7 +208,7 @@ function Layout() {
   const handleJoinGame = async (ID) => {
     console.log('Creating game');
     const response = await fetch(
-        "http://tjayoub.pythonanywhere.com/join_game",
+        "https://tjayoub.pythonanywhere.com/join_game",
         {
           method: "POST",
           headers: {
